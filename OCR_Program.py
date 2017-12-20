@@ -16,6 +16,7 @@ https://google.github.io/styleguide/pyguide.html
 # ====== Imports (Python Native Modules and My Program Modules) ====== #
 
 from PIL import ImageFilter, Image
+import Encryption as E
 import Variables as v
 import pytesseract
 import sys
@@ -29,8 +30,8 @@ import time
 class OCR:
     '''Class for carrying out Optical Character Recognition functions.
 
-    Class within which all of the OCR tools reside. Receives image input and 
-    first tries to identify text within the image. If no text is found, the 
+    Class within which all the OCR tools reside. Receives image input and first
+    tries to identify text within the image. If no text is found, the 
     'image clean-up' process is called, converting the image to black and white
     and enlarging in small incriments. The conversion is then re-tried.
     '''
@@ -45,8 +46,7 @@ class OCR:
     def save(self, text):
         '''Saves the OCR Converted file to the OCR_Conversions folder'''
         with open(os.path.join('OCR_Conversions', self.completeName+".txt"), "w", encoding="utf-8") as file:
-            toFile = text
-            file.write(toFile)
+            file.write(E.encrypt(text))
         v.settings["noOfOCRs"] += 1
         v.save()
 

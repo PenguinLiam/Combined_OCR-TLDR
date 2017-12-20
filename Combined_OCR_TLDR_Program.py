@@ -18,6 +18,7 @@ https://google.github.io/styleguide/pyguide.html
 
 import TLDR_Program as TLDR
 import OCR_Program as OCR
+import Encryption as E
 import Variables as v
 import time
 import os
@@ -129,16 +130,16 @@ class Settings_Page(Page):
         # ===== Top of Page =====#
         daysFrame = tk.Frame(self, padx=20, pady=40, bg="blue")
         daysFrame.pack(side="top", anchor="w", fill="y", expand=True)
-        daysLabel = tk.Label(daysFrame, text="Days to keep files", font=("Helvetica", 16), padx=5)
+        daysLabel = tk.Label(daysFrame, text="Days to Keep Files", font=("Helvetica", 16), padx=5)
         daysLabel.pack(side="left", expand=True)
         self.daysEntry = tk.Entry(daysFrame, font=("Helvetica", 16))
         self.daysEntry.insert(0, str(v.settings["noOfDays"]))
         self.daysEntry.pack(side="left", expand=True)
         
         # ===== Bottom of Page =====#
-        confirm = tk.Button(self, text="confirm changes", font=("Helvetica", 16), command=self.saveSettings)
+        confirm = tk.Button(self, text="Confirm Changes", font=("Helvetica", 16), command=self.saveSettings)
         confirm.pack(side="left", expand=True)
-        reset = tk.Button(self, text="Reset settings to default", font=("Helvetica", 16), command=self.warning)
+        reset = tk.Button(self, text="Reset Settings to Default", font=("Helvetica", 16), command=self.warning)
         reset.pack(side="left", expand=True)
         tempFrame = tk.Frame(self, bg="green")
         tempFrame.pack(side="bottom", fill="both", expand=True)
@@ -261,7 +262,7 @@ class TLDR_Page(Page):
         try:
             summaryAmount = int(str(self.noOfSentences.get()))
             print(type(summaryAmount), summaryAmount)
-            summary = TLDR.main(title, text, summaryAmount)
+            summary = TLDR.summarise(title, text, summaryAmount)
             self.summaryBox.delete(1.0, "end-1c")
             self.summaryBox.insert(1.0, summary)
         except TypeError:
@@ -286,7 +287,7 @@ class TLDR_Page(Page):
             with open(self.filename, "r", encoding="utf-8") as f:
                 text = f.read()
                 self.mainBox.delete(1.0, "end-1c")
-                self.mainBox.insert(1.0, text)
+                self.mainBox.insert(1.0, E.decrypt(text))
         except Exception as e:
             errorBox = messagebox.showinfo("Error", "An unexpected error occured:\n"+'"'+str(e)+'"')
        
