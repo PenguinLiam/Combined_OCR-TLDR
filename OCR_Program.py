@@ -102,7 +102,7 @@ class OCR:
         bool = False
         text.split(" ")
         for word in text:
-            if i in v.alphabet:
+            if word in v.alphabet:
                 bool = True
                 break
         return bool

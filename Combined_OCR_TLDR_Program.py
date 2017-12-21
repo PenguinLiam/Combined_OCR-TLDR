@@ -372,7 +372,7 @@ class OCR_Page(Page):
             Exception: Any other error flagged and returned with error message
         '''
         try:
-            imageData = OCR.OCRConvert(self.filename)
+            imageData = OCR.convert(self.filename)
             self.filename = imageData[1]
             text = imageData[0]
             print(self.filename)
@@ -395,7 +395,7 @@ class OCR_Page(Page):
             Exception: Any other error flagged and returned with error message
         '''
         try:
-            imageData = OCR.cleanup_OCR(self.filename)
+            imageData = OCR.cleanup(self.filename)
             self.outputBox.delete(1.0, "end-1c")
             self.outputBox.insert(1.0, imageData[0])
         except UnicodeEncodeError as e:
